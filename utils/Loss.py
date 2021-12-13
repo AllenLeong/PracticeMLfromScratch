@@ -57,5 +57,5 @@ class MeanSquareError():
     def loss(self, y, y_hat):
         return np.mean((y-y_hat)**2)/2
 
-    def gradient(y, y_hat):
+    def gradient(self,y, y_hat):
         return np.mean(-(y-y_hat))

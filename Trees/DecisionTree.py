@@ -164,15 +164,22 @@ class DecisionTree():
         elif self.splitter == 'quantile':
             proposal =  quantile_split_search(X,y,random_state=self.random_state)
 
-        for feature_idx, threshold in proposal:
+        selected_idx = range(X.shape[1])
+        if self.max_features:
+            if type(self.max_features) is int:
+                selected_idx = np.choice(range(X.shape[1]), self.max_features)
+            elif type(self.max_features) is float:
+                selected_idx = np.choice(range(X.shape[1]), int(self.max_features*X.shape[1])+1)
 
-            score_new = self._calculate_loss_decrease(y,
-                                                 y[X[:,feature_idx]< threshold],
-                                                 y[X[:,feature_idx]>= threshold])
-            if score < score_new:
-                score = score_new
-                splitter = dict(feature_idx=feature_idx,
-                                threshold=threshold)
+        for feature_idx, threshold in proposal:
+            if feature_idx in selected_idx:
+                score_new = self._calculate_loss_decrease(y,
+                                                     y[X[:,feature_idx]< threshold],
+                                                     y[X[:,feature_idx]>= threshold])
+                if score < score_new:
+                    score = score_new
+                    splitter = dict(feature_idx=feature_idx,
+                                    threshold=threshold)
 
         return splitter, score
 
@@ -228,7 +235,10 @@ class DecisionTree():
         return self.Tree.predict(x)
 
     def predict(self,X):
-        return [self._predict_i(x) for x in X]
+        if len(X)==1:
+            return self._predict_i(X)
+        else:
+            return np.array([self._predict_i(x) for x in X])
 
 
 
@@ -331,15 +341,22 @@ class RegressionTree():
         elif self.splitter == 'quantile':
             proposal =  quantile_split_search(X,y,random_state=self.random_state)
 
-        for feature_idx, threshold in proposal:
+        selected_idx = range(X.shape[1])
+        if self.max_features:
+            if type(self.max_features) is int:
+                selected_idx = np.random.choice(range(X.shape[1]), self.max_features)
+            elif type(self.max_features) is float:
+                selected_idx = np.random.choice(range(X.shape[1]), int(self.max_features*X.shape[1])+1)
 
-            score_new = self._calculate_loss_decrease(y,
-                                                 y[X[:,feature_idx]< threshold],
-                                                 y[X[:,feature_idx]>= threshold])
-            if score < score_new:
-                score = score_new
-                splitter = dict(feature_idx=feature_idx,
-                                threshold=threshold)
+        for feature_idx, threshold in proposal:
+            if feature_idx in selected_idx:
+                score_new = self._calculate_loss_decrease(y,
+                                                     y[X[:,feature_idx]< threshold],
+                                                     y[X[:,feature_idx]>= threshold])
+                if score < score_new:
+                    score = score_new
+                    splitter = dict(feature_idx=feature_idx,
+                                    threshold=threshold)
 
         return splitter, score
 
@@ -376,14 +393,18 @@ class RegressionTree():
     def fit(self, X, y):
         self.depth = 1
         splitter, score = self._best_splitter(X,y)
+
         self.Tree = RegressionNode(splitter['feature_idx'],
                             splitter['threshold'],
                              1,
-                            False)
+                            score==0)
         self._tree_grow(self.Tree, X,y)
 
     def _predict_i(self,x):
         return self.Tree.predict(x)
 
     def predict(self,X):
-        return [self._predict_i(x) for x in X]
+        if len(X)==1:
+            return self._predict_i(X)
+        else:
+            return np.array([self._predict_i(x) for x in X])
