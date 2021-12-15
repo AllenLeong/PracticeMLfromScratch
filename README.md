@@ -24,7 +24,7 @@ tree.predict(X)
 
 ## Ensembles
 
-```
+```python
 from Trees.Ensamble import Ensamble
 rf = Ensamble([DecisionTree.DecisionTree(max_depth=3, splitter='quantile'),
               DecisionTree.DecisionTree(max_depth=3, splitter='quantile'),
@@ -34,7 +34,7 @@ rf = Ensamble([DecisionTree.DecisionTree(max_depth=3, splitter='quantile'),
 
 ### Random Forest
 
-```
+```python
 from Trees.Ensamble import Ensamble, RandomForest
 rf = RandomForest(max_features=.05,n_estimator=30,max_depth = 3)
 rf.fit(X,y)
