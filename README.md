@@ -13,7 +13,7 @@ tree.fit(X,y)
 tree.predict(X)
 ```
 #### Decisoin Tree Result
-![alt text](/figures/tree_clf result.png)
+<img src="figures/tree_clf result.png" />
 
 ### Regression Tree
 
@@ -23,6 +23,10 @@ tree = DecisionTree.RegressionTree()
 tree.fit(X,y)
 tree.predict(X)
 ```
+#### Regression Tree Result
+<img src="figures/tree_reg depth1 rst.png" />
+<img src="figures/tree_reg depth6 rst.png" />
+<img src="figures/tree_reg depth16 rst.png" />
 
 ## Ensembles
 
@@ -52,4 +56,6 @@ gbdt = GradientBoostTree(n_estimator=n_estimator,
                          learning_rate=5e1,max_depth=depth)
 gbdt.fit(X,y)
 ```
-
+#### GBDT Results
+<img src="figures/gbm 1 rst.png" />
+<img src="figures/gbm 8 rst.png" />
