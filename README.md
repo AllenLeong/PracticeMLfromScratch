@@ -12,6 +12,8 @@ tree = DecisionTree.DecisionTree()
 tree.fit(X,y)
 tree.predict(X)
 ```
+#### Decisoin Tree Result
+![alt text](figures/tree_clf result.png)
 
 ### Regression Tree
 
