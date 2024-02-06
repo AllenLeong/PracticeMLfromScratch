@@ -13,6 +13,10 @@ tree.fit(X,y)
 tree.predict(X)
 ```
 #### Decisoin Tree Result
+<img src="figures/tree_clf 1 result.png" />
+<img src="figures/tree_clf 2 result.png" />
+<img src="figures/tree_clf 3 result.png" />
+<img src="figures/tree_clf 4 result.png" />
 <img src="figures/tree_clf result.png" />
 
 ### Regression Tree
@@ -58,4 +62,5 @@ gbdt.fit(X,y)
 ```
 #### GBDT Results
 <img src="figures/gbm 1 rst.png" />
+<img src="figures/gbm 4 rst.png" />
 <img src="figures/gbm 8 rst.png" />
